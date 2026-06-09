@@ -22,15 +22,26 @@ git clean -fd
 
 Check the migration history since the last commit:
 ```bash
+# Mac/Linux:
 cd backend && ../.venv/bin/python -m alembic history
+# Windows:
+cd backend && ..\\.venv\\Scripts\\python -m alembic history
 ```
 
 If the migration graph since the last commit is linear, downgrade one step per migration added since the commit:
 ```bash
+# Mac/Linux:
 cd backend && ../.venv/bin/python -m alembic downgrade -1
+# Windows:
+cd backend && ..\\.venv\\Scripts\\python -m alembic downgrade -1
 ```
 
-If the migration graph is non-linear (merge commits, branching chains, or migrations that depend on each other in a non-obvious way), **stop and ask the user before downgrading** — explain what you found and what the options are.
+If the migration graph is non-linear (merge commits, branching chains, or migrations that depend on each other in a non-obvious way), **stop and ask the user before downgrading**. Explain what you found, then offer these options:
+- Run `alembic downgrade base` to roll back all migrations (loses all data)
+- Manually identify the last safe revision and run `alembic downgrade <revision>`
+- Leave the database as-is and only reset code files
+
+Wait for the user to choose before proceeding.
 
 ## Wrap up
 

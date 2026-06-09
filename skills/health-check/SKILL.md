@@ -8,17 +8,16 @@ Run all checks and report the full picture at once — do not stop at the first 
 
 ## Checks
 
-**Python env** — check `.venv` exists in the project root. If it does, run `.venv/bin/python --version`.
+**Python env** — check `.venv` exists in the project root. If it does, run `.venv/bin/python --version` (Mac/Linux) or `.venv\Scripts\python --version` (Windows).
 
 **Backend server** — `curl -s -o /dev/null -w "%{http_code}" --max-time 3 http://localhost:8000`
 A 2xx or 4xx code = running. Connection error = not running.
 
 **Frontend server** — `curl -s -o /dev/null -w "%{http_code}" --max-time 3 http://localhost:9000`
 
-**Database connection** — `cd backend && ../.venv/bin/python -m alembic current`
-Note the revision on success; capture the error on failure.
+**Database connection** — `cd backend && ../.venv/bin/python -m alembic current` (Mac/Linux) or `cd backend && ..\\.venv\\Scripts\\python -m alembic current` (Windows). Note the revision on success; capture the error on failure.
 
-**Migration drift** — `cd backend && ../.venv/bin/python -m alembic heads`
+**Migration drift** — `cd backend && ../.venv/bin/python -m alembic heads` (Mac/Linux) or `cd backend && ..\\.venv\\Scripts\\python -m alembic heads` (Windows).
 Compare to current revision. Flag if they differ.
 
 **URLs** — ping frontend (`:9000`) and backend (`:8000`), note HTTP status codes.
@@ -44,10 +43,10 @@ Use ✓ healthy, ✗ failed, ⚠ warning. Translate every error into plain langu
 
 ## Fixes to offer
 
-- **`.venv` missing** — offer to create: `python3 -m venv .venv && .venv/bin/pip install -r backend/requirements.txt`
+- **`.venv` missing** — offer to create: `python3 -m venv .venv && .venv/bin/pip install -r backend/requirements.txt` (Mac/Linux) or `python -m venv .venv && .venv\Scripts\pip install -r backend/requirements.txt` (Windows)
 - **Backend not running** — tell user: `cd backend && python -m src.main`
 - **Frontend not running** — tell user: `cd frontend && yarn quasar dev`
-- **Unapplied migrations** — offer: `cd backend && ../.venv/bin/python -m alembic upgrade head`
+- **Unapplied migrations** — offer: `cd backend && ../.venv/bin/python -m alembic upgrade head` (Mac/Linux) or `cd backend && ..\\.venv\\Scripts\\python -m alembic upgrade head` (Windows)
 - **DB connection error** — check `SQLALCHEMY_DATABASE_URI` in `backend/.env` is `sqlite:///./app.db`
 
 For safe fixes (applying migrations, recreating venv), offer to do them immediately.

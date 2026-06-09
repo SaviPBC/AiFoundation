@@ -33,6 +33,7 @@ Check that `PROJECT.md` exists in the current directory. If not, stop and ask th
    **Database migrations**
    - No migration whose `downgrade()` is `pass` or not implemented
    - No migration that drops or alters something in `upgrade()` without restoring it in `downgrade()`
+   - No migration that drops a column or table in the same migration that creates its replacement — must be two separate migrations
 
    **API & data handling**
    - No external API calls without a timeout
@@ -50,7 +51,7 @@ Check that `PROJECT.md` exists in the current directory. If not, stop and ask th
 ## Commit
 
 - Commit message format: `type(scope): description` — e.g. `feat(todos): add due date field`, `fix(api): handle empty response from payments`, `chore(deps): bump fastapi`. Keep the description under 72 characters.
-- Stage tracked files: `git add -u`. Confirm before adding untracked files.
+- Stage tracked files: `git add -u`. Confirm before adding untracked files by listing them and asking: "These files are new and untracked — should I include them in this commit?" (`git add -u` is used here, not `git add -A`, because untracked files may be intentionally excluded.)
 - Commit, then push. If no upstream: `git push -u origin <branch>`
 - Never amend previous commits.
 

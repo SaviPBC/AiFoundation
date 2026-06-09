@@ -4,6 +4,8 @@ description: Implement a ticket from PROJECT.md. Invoke when the user says "work
 
 # Build a Ticket
 
+**Before starting:** invoke `savi-ai-foundation:guardrails` to run the session startup checks (uncommitted changes check + standards scan) if you haven't already done so this session.
+
 Implement exactly what the ticket asks — no more, no less.
 
 ## Find the project
@@ -19,15 +21,15 @@ Before starting new work, quickly check whether `PROJECT.md` reflects reality:
 
 ## Sync with remote
 
-`git fetch origin` — if behind, `git pull` automatically. If uncommitted changes would conflict, tell the user to commit first and stop.
+`git fetch origin` — if behind, `git pull` automatically. If no remote is set, skip silently. If uncommitted changes would conflict, tell the user to commit first and stop.
 
 ## Pick the ticket
 
 - If the user named a ticket number, use that ticket.
 - If the user provided feedback alongside a ticket (e.g. "the button doesn't show on mobile"), treat that feedback as the specific problem to fix — do not re-implement the whole ticket, focus only on what the feedback describes.
-- If the user reported a bug or error with no ticket reference, create a ticket for it in `PROJECT.md` first, then work on that ticket.
+- If the user reported a bug or error with no ticket reference, invoke `savi-ai-foundation:manage-tickets` to create a properly formatted ticket first, then work on that ticket.
 - Otherwise, pick the highest-priority unblocked ticket from `PROJECT.md`.
-- If the top ticket is blocked, explain why in plain language and tell the user what to do next — either work the blocking ticket first or adjust the plan via the manage-tickets skill.
+- If the top ticket is blocked, explain why in plain language and tell the user what to do next — either work the blocking ticket first or invoke `savi-ai-foundation:manage-tickets` to adjust the plan.
 
 ## Before writing any code
 
@@ -74,9 +76,11 @@ Before starting new work, quickly check whether `PROJECT.md` reflects reality:
 - `downgrade()` must be the exact inverse of `upgrade()` — drop what was added, restore what was removed.
 - Never drop a column or table in the same migration that creates its replacement. Use two migrations.
 - Before any migration that drops, renames, or significantly alters a table, back up the affected data.
-- Test rollback locally before marking done: `cd backend && ../.venv/bin/python -m alembic downgrade -1` then `alembic upgrade head`. Both must succeed.
+- Test migrations against realistic data, not just an empty database.
+- Test rollback locally before marking done: `cd backend && ../.venv/bin/python -m alembic downgrade -1` (Mac/Linux) or `..\\.venv\\Scripts\\python -m alembic downgrade -1` (Windows), then `alembic upgrade head`. Both must succeed.
+- Resetting the branch does not undo migrations that have already run — use `alembic downgrade` manually.
 
-For API rules, analytics requirements, Claude API rules, and all other standards — follow the `savi-ai-foundation:guardrails` skill.
+For API rules, analytics requirements, Claude API rules, and all other standards — follow `savi-ai-foundation:guardrails`.
 
 ## After writing code
 

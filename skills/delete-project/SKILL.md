@@ -10,10 +10,16 @@ Tell them exactly what will be deleted: running server processes, the entire pro
 
 ## Delete
 
-Kill servers (Mac/Linux):
+Kill servers — Mac/Linux:
 ```bash
 lsof -ti:8000 | xargs kill -9 2>/dev/null || true
 lsof -ti:9000 | xargs kill -9 2>/dev/null || true
+```
+
+Kill servers — Windows (run in Command Prompt or PowerShell):
+```
+for /f "tokens=5" %p in ('netstat -ano ^| findstr :8000') do taskkill /PID %p /F
+for /f "tokens=5" %p in ('netstat -ano ^| findstr :9000') do taskkill /PID %p /F
 ```
 
 Delete the project folder (from one level up):
