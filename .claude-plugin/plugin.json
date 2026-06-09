@@ -1,0 +1,11 @@
+{
+  "name": "savi-ai-foundation",
+  "displayName": "Savi AI Foundation",
+  "description": "Development workflow guardrails and tools for Savi AI Foundation web app projects",
+  "author": {
+    "name": "Savi",
+    "email": "ross@bysavi.com"
+  },
+  "repository": "https://github.com/SaviPBC/AiFoundation",
+  "license": "UNLICENSED"
+}
