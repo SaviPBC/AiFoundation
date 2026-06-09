@@ -153,7 +153,9 @@ AppName/
 - `downgrade()` must be the exact inverse of `upgrade()`.
 - Never drop a column or table in the same migration that creates its replacement. Use two migrations: one to add the new structure, a second (after verifying data was moved) to drop the old one.
 - Before any migration that drops, renames, or significantly alters a table, back up the affected data.
+- Test migrations against realistic data, not just an empty database.
 - Test rollback locally before marking done: `cd backend && ../.venv/bin/python -m alembic downgrade -1` then `alembic upgrade head`. Both must succeed.
+- Resetting the branch does not undo migrations that have already run — use `alembic downgrade` manually.
 
 **API & external services**
 
