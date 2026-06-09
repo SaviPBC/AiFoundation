@@ -30,7 +30,7 @@ If the migration graph since the last commit is linear, downgrade one step per m
 cd backend && ../.venv/bin/python -m alembic downgrade -1
 ```
 
-If the migration graph is non-linear (merge commits, branching chains), **stop and ask the user before downgrading** — explain what you found and what the options are.
+If the migration graph is non-linear (merge commits, branching chains, or migrations that depend on each other in a non-obvious way), **stop and ask the user before downgrading** — explain what you found and what the options are.
 
 ## Wrap up
 

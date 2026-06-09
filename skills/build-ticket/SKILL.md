@@ -42,7 +42,41 @@ Before starting new work, quickly check whether `PROJECT.md` reflects reality:
 - Follow existing patterns — match naming, structure, and style.
 - Do not refactor surrounding code or add features beyond the ticket's ACs.
 - Do not add comments unless the logic is genuinely non-obvious.
-- Apply all rules from the `savi-ai-foundation:guardrails` skill: tests, security, environment variables, migrations, API rules, analytics.
+- Never hardcode URLs, credentials, or anything that differs between environments.
+- Do not introduce SQL injection, XSS, or other OWASP top-10 vulnerabilities.
+
+**Backend tests** — required for all backend additions:
+- Write in `backend/src/tests/`, mirroring `src/` structure (e.g. `src/tests/routers/test_foo.py` for `src/routers/foo.py`)
+- Use pytest. Function names start with `test_`. Mock external services and DB calls — no real HTTP calls or live DB in unit tests.
+- Run: `cd backend && ../.venv/bin/python -m pytest src/tests/ -v`
+
+**Frontend tests** — required for all component additions:
+- Write in `frontend/src/tests/`, mirroring `src/` structure
+- Use Vitest + `@vue/test-utils`. Mock `boot/api` and Pinia stores — no real HTTP calls.
+- Run: `cd frontend && yarn test`
+
+**Frontend conventions:**
+- Use Quasar component classes with minimal custom CSS
+- Icons: fontawesome (`fas fa-cog`) preferred, fallback to material-icons
+- Prefer existing layouts — if a new layout is genuinely needed, justify it in the ticket before creating it
+
+**Backend environment variables:**
+- All config lives in `backend/src/config.py` as a Pydantic `BaseSettings` class
+- Add a typed field to `Settings`, set it in `backend/.env` and `backend/.env.example`
+- Access via `from src.config import settings` — never use `os.environ` directly
+
+**Frontend environment variables:**
+- Vite exposes vars prefixed with `VITE_` via `import.meta.env.VITE_MY_VAR`
+- Add new vars as fallbacks inline in `frontend/src/boot/api.js` for local dev
+
+**Database migrations:**
+- Always implement both `upgrade()` and `downgrade()`. Never leave `downgrade()` as `pass`.
+- `downgrade()` must be the exact inverse of `upgrade()` — drop what was added, restore what was removed.
+- Never drop a column or table in the same migration that creates its replacement. Use two migrations.
+- Before any migration that drops, renames, or significantly alters a table, back up the affected data.
+- Test rollback locally before marking done: `cd backend && ../.venv/bin/python -m alembic downgrade -1` then `alembic upgrade head`. Both must succeed.
+
+For API rules, analytics requirements, Claude API rules, and all other standards — follow the `savi-ai-foundation:guardrails` skill.
 
 ## After writing code
 

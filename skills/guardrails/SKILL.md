@@ -44,7 +44,7 @@ If gaps are found, tell the user:
 - **Migrations not clean (multiple heads):** `cd backend && ../.venv/bin/python -m alembic merge heads -m "merge heads"`, then commit the merge migration.
 - **Stack mismatch:** tell the user this needs a stack migration bigger than one session — flag for the team, defer, and move on.
 
-Show what was changed for each gap, then ask if they want to commit. After all gaps are resolved or deferred, update `<!-- last-standards-check: YYYY-MM-DD -->` in `PROJECT.md` to today's date. If no gaps are found, stamp it immediately and say nothing.
+Show what was changed for each gap, then ask if they want to commit. After all gaps are resolved or deferred, update `<!-- last-standards-check: YYYY-MM-DD -->` in `PROJECT.md` to today's date. Do not re-run the scan again this session. If no gaps are found, stamp it immediately and say nothing.
 
 **If the user says no/defer:** proceed with their original request without pushing further.
 
@@ -64,8 +64,8 @@ When the user's request matches one of the patterns below, invoke the correspond
 | "check the environment", "what's broken", "doctor", "health check" | `savi-ai-foundation:health-check` |
 | "reset", "undo my changes", "go back to last commit" | `savi-ai-foundation:reset` |
 | "delete the project", "remove this" | `savi-ai-foundation:delete-project` |
-| "metabase", "run a report", "query the data", "how many..." | `savi-ai-foundation:metabase` |
-| "graduate to Supabase", "connect to team database" | fetch and follow https://gist.githubusercontent.com/ross-savi/83dca6f9ff7056cd46eb9830f6ea2af2/raw/savi-graduate-to-team-db.md |
+| "metabase", "run a report", "query the data", "how many...", "show me data on..." | `savi-ai-foundation:metabase` |
+| "graduate to Supabase", "connect to team database", "move to Supabase", "migrate to team DB" | fetch and follow https://gist.githubusercontent.com/ross-savi/83dca6f9ff7056cd46eb9830f6ea2af2/raw/savi-graduate-to-team-db.md |
 
 ---
 
@@ -181,8 +181,10 @@ AppName/
 
 **Versioning**
 
-- After completing a ticket, bump **patch** (0.0.x) in `VERSION` (project root) and `frontend/package.json`.
-- Never bump major or minor — that happens when closing a roadmap phase.
+- `VERSION` file at project root (semver). `frontend/package.json` `version` must always match it.
+- Bump **patch** (0.0.x) after completing a feature ticket or bug fix.
+- Bump **minor** (0.x.0) when closing a roadmap phase.
+- Never bump major without explicit instruction.
 
 **Code style — Python**
 
@@ -278,6 +280,10 @@ Both write to a shared Supabase database via its REST API. The publishable key i
 - `SUPABASE_URL` = `"https://zdpllaygbjaqcolqmkej.supabase.co"`
 - `SUPABASE_PUBLISHABLE_KEY` = `"sb_publishable_9_U7qU9iwOZwDCS89SDaTA_f5r_ESiZ"`
 
+**Supabase RLS (already configured — for reference)**
+
+RLS is enabled on both tables with `FOR INSERT TO anon` policies. SELECT, UPDATE, and DELETE return empty results for the anon role.
+
 **Table schemas**
 
 `APP_STATS_API_Usage`: App, Service, Endpoint, Records Returned (integer), Duration (ms) (integer), User, Timestamp (timestamptz UTC)
@@ -313,5 +319,5 @@ Safe next steps: {what the user can do}
 Rules:
 - **Never hide a failure** with a silent retry that masks the original error.
 - **Never roll back state automatically** without asking — the user may want to inspect it first.
-- **Never leave inconsistent state silently** — if a migration half-applied, say so.
+- **Never leave inconsistent state silently** — if a migration half-applied, say so; if a test left artifacts, say so.
 - **Translate errors into plain language** — no raw stack traces as the primary message (include them below if relevant).

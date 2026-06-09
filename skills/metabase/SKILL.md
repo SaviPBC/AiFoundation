@@ -46,8 +46,8 @@ curl -s -o /dev/null -w "%{http_code}" \
   -H "X-API-KEY: ${MB_API_KEY}"
 ```
 - `200` → proceed.
-- `401` → tell user the API key is invalid or expired.
-- `403` → tell user the key is valid but doesn't have permission.
+- `401` → tell user the API key is invalid or expired — they should generate a new one.
+- `403` → tell user the key is valid but doesn't have permission — they should contact an admin.
 - Connection error → tell user Metabase is unreachable and stop.
 
 ## Step 2 — Resolve the database ID
