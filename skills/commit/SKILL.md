@@ -27,6 +27,12 @@ Check that `PROJECT.md` exists in the current directory. If not, stop and ask th
    **Security**
    - No SQL injection, XSS, or other OWASP top-10 vulnerabilities
 
+   **Sensitive data** (see `docs/sensitive-data-guidelines.md`)
+   - No Level 3 or 4 data (SSN, bank accounts, card data, tokens, passwords) stored, logged, or returned to the frontend
+   - No Level 3 or 4 data sent to any third-party service
+   - Level 2 data (email, name, address) minimized — only stored/transmitted where there is a specific requirement
+   - Credentials and tokens stored encrypted, never in plaintext, never in logs or error messages
+
    **Layout**
    - Any new frontend layout is justified — prefer extending existing layouts
 

@@ -55,7 +55,7 @@ When the user's request matches one of the patterns below, invoke the correspond
 | "commit", "push my changes", "ship it" | `savi-ai-foundation:commit` |
 | "check the environment", "what's broken", "doctor", "health check" | `savi-ai-foundation:health-check` |
 | "metabase", "run a report", "query the data", "how many...", "show me data on..." | `savi-ai-foundation:metabase` |
-| "graduate to Supabase", "connect to team database", "move to Supabase", "migrate to team DB" | fetch and follow https://gist.githubusercontent.com/ross-savi/83dca6f9ff7056cd46eb9830f6ea2af2/raw/savi-graduate-to-team-db.md |
+| "graduate to Supabase", "connect to team database", "move to Supabase", "migrate to team DB" | `savi-ai-foundation:graduate-to-supabase` |
 
 ---
 
@@ -262,6 +262,19 @@ Brand font is **Tofino** (`Tofino-Regular` / `Tofino-Medium` / `Tofino-Bold`), f
 - Tables: `q-table` with `flat` + `bordered`. Alternate rows with `#f1f3f9` / `#ffffff`.
 - Icons: Font Awesome (`fas fa-*`) preferred; Material Icons as fallback.
 - Use Quasar classes (`q-*`) with minimal custom CSS. Spacing on an 8px grid.
+
+---
+
+## Supabase
+
+Supabase is used in two distinct ways in Savi apps — don't conflate them.
+
+| Use case | When | Details |
+|---|---|---|
+| **Analytics** | Every app, from day one | INSERT-only via a publishable key baked into `config.py`. Never requires a connection string or migration. See **Analytics (Supabase)** below. |
+| **Team database** | When an app graduates from local SQLite | Full Postgres connection via a private connection string. Requires schema isolation, migration changes, and an optional data migration from `app.db`. Invoke the `savi-ai-foundation:graduate-to-supabase` skill. |
+
+Default for new apps is SQLite locally. Do not suggest or attempt a Supabase DB migration unless the user explicitly asks.
 
 ---
 
