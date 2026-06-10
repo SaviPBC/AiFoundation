@@ -1,5 +1,5 @@
 ---
-description: Query Metabase for reports and data. Invoke when the user says "metabase", "run a report", "query the data", "how many...", "show me data on...", or provides a Metabase URL.
+description: Query Metabase for reports and data. Invoke only when the user explicitly mentions "metabase", references a Metabase URL, or asks to run/pull/search a Metabase report by name. Do not invoke for general questions about reports, data, or metrics unless Metabase is specifically named or implied.
 ---
 
 # Metabase
