@@ -52,11 +52,8 @@ When the user's request matches one of the patterns below, invoke the correspond
 | "set up a new app", "create a project", "new project" | `savi-ai-foundation:new-project` |
 | "work on the next ticket", "build this", "code", "implement" | `savi-ai-foundation:build-ticket` |
 | "plan features", "add a ticket", "what's the plan", "product manager" | `savi-ai-foundation:manage-tickets` |
-| "show tickets", "what are we working on" | `savi-ai-foundation:show-tickets` |
 | "commit", "push my changes", "ship it" | `savi-ai-foundation:commit` |
 | "check the environment", "what's broken", "doctor", "health check" | `savi-ai-foundation:health-check` |
-| "reset", "undo my changes", "go back to last commit" | `savi-ai-foundation:reset` |
-| "delete the project", "remove this" | `savi-ai-foundation:delete-project` |
 | "metabase", "run a report", "query the data", "how many...", "show me data on..." | `savi-ai-foundation:metabase` |
 | "graduate to Supabase", "connect to team database", "move to Supabase", "migrate to team DB" | fetch and follow https://gist.githubusercontent.com/ross-savi/83dca6f9ff7056cd46eb9830f6ea2af2/raw/savi-graduate-to-team-db.md |
 

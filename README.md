@@ -16,11 +16,8 @@ Claude Code plugin providing development workflow guardrails and tools for Savi 
 | new-project | `/savi-ai-foundation:new-project` | "set up a new app", "new project" |
 | build-ticket | `/savi-ai-foundation:build-ticket` | "work on a ticket", "build this" |
 | manage-tickets | `/savi-ai-foundation:manage-tickets` | "plan features", "add a ticket" |
-| show-tickets | `/savi-ai-foundation:show-tickets` | "show tickets", "what are we working on" |
 | commit | `/savi-ai-foundation:commit` | "commit", "push my changes" |
 | health-check | `/savi-ai-foundation:health-check` | "health check", "what's broken" |
-| reset | `/savi-ai-foundation:reset` | "reset", "undo my changes" |
-| delete-project | `/savi-ai-foundation:delete-project` | "delete the project" |
 | metabase | `/savi-ai-foundation:metabase` | "run a report", "query the data" |
 
 ## Installing for users
@@ -46,10 +43,7 @@ AiFoundation/
     ├── new-project/       # Full project scaffold workflow
     ├── build-ticket/      # Ticket implementation workflow
     ├── manage-tickets/    # Product manager / roadmap workflow
-    ├── show-tickets/      # Ticket status display
     ├── commit/            # Quality gate + git commit workflow
     ├── health-check/      # Environment diagnostics
-    ├── reset/             # Revert to last commit
-    ├── delete-project/    # Remove a project
     └── metabase/          # Metabase query interface
 ```
