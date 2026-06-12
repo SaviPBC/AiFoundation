@@ -33,13 +33,19 @@ If the marker is missing or older than 7 days, run the following checks:
 3. **Migrations clean:** `cd backend && ../.venv/bin/python -m alembic heads` returns exactly one head.
 4. **Stack matches:** `backend/requirements.txt` includes FastAPI, SQLAlchemy, Alembic; `frontend/package.json` includes Vue 3, Quasar 2, Pinia. No substitutions.
 
-If gaps are found, fix them automatically without asking. Work through them sequentially:
+If gaps are found, list them and ask: "I found some standards gaps — is now a good time to fix them, or should I flag them next session?" Do not fix anything until they confirm.
+
+If they confirm, fix them sequentially:
 - **Analytics not wired up:** follow the Analytics (Supabase) section below. Create `backend/src/analytics.py` with `log_api_usage(...)` and `log_engagement(...)`, wire `log_api_usage` into any routes that call external APIs, and add a `router.afterEach` hook in `frontend/src/router/index.js` that POSTs to the backend engagement endpoint. Reuse existing patterns in the repo; only create new files when none exist.
 - **Missing `.env.example`:** if `.env` exists, derive `.env.example` by copying variable names with values cleared. If no `.env` exists, stub it from variables referenced by `config.py`.
 - **Migrations not clean (multiple heads):** `cd backend && ../.venv/bin/python -m alembic merge heads -m "merge heads"` (Mac/Linux) or `..\\.venv\\Scripts\\python -m alembic merge heads -m "merge heads"` (Windows), then commit the merge migration.
 - **Stack mismatch:** do not auto-fix. Tell the user: "This needs a stack migration that's bigger than one session — flagging for the team." Mark as deferred and move on.
 
-After fixing all gaps, tell the user what was changed (one bullet per gap fixed) and ask if they want to commit. After all gaps are resolved or deferred, update `<!-- last-standards-check: YYYY-MM-DD -->` in `PROJECT.md` to today's date. Do not re-run the scan again this session. If no gaps are found, stamp it immediately and say nothing.
+After fixing all gaps, tell the user what was changed (one bullet per gap fixed) and ask if they want to commit. Then update `<!-- last-standards-check: YYYY-MM-DD -->` in `PROJECT.md` to today's date. Do not re-run the scan again this session.
+
+If they defer (say no or not now), do NOT update the marker — leave it so the gaps surface again next session.
+
+If no gaps are found, stamp it immediately and say nothing.
 
 ---
 
